@@ -1,0 +1,8 @@
+query GetAllProducts {
+  getAllProducts {
+    _id
+    name
+    category
+    price
+  }
+}

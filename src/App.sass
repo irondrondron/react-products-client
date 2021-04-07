@@ -1,0 +1,383 @@
+$accent: #4BCFA0
+$secondary: #E5E5E5
+$error: #E43F3F
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap')
+
+@import "media_mixin"
+
+*
+  margin: 0
+  padding: 0
+  box-sizing: border-box
+  font-family: 'Roboto'
+
+button
+  outline: none
+
+  &:active, &:focus
+    outline: none
+
+.App
+  overflow: hidden
+  min-height: 100vh
+  width: 100%
+  background-color: $secondary
+  display: flex
+  justify-content: center
+  align-items: center
+
+.Loader
+  display: flex
+  justify-content: center
+  align-items: center
+
+.container
+  margin: 0 16px
+  padding: 0 16px
+  width: 100%
+
+  @include _1170
+    margin: 0 10px
+    padding: 0 10px
+
+  @include _600
+    margin: 0 5px
+    padding: 0 5px
+
+.BuyCheapest
+  grid-column: 1/-1
+  text-align: center
+  margin: 50px auto
+
+  @include _1170
+    margin: 40px auto
+
+  @include _768
+    margin: 30px auto
+
+  &__button
+    cursor: pointer
+    color: $accent
+    font-size: 24px
+    background-color: #fff
+    border-radius: 16px
+    border: 1px solid rgba(0, 0, 0, 0.1)
+    padding: 16px 48px
+    margin-left: auto
+    transition: all .3s ease-in-out
+
+    @include _600
+      border-radius: 10px
+      font-size: 18px
+      padding: 10px 40px
+
+    &:hover
+      background-color: $accent
+      color: #fff
+      border: 1px solid $accent
+
+.Card
+  margin: 50px auto
+  display: grid
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr))
+  grid-gap: 32px
+  align-items: center
+
+  @include _1170
+    grid-gap: 10px
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr))
+
+  @include _480
+    grid-gap: 10px
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr))
+
+
+  &__wrapper
+    display: flex
+
+  &__item
+    padding: 32px
+    height: 256px
+    background-color: #fff
+    border-radius: 24px
+    transition: all .3s ease-in-out
+    &:hover
+      box-shadow: 24px 24px 40px rgba(75, 207, 160, 0.08)
+
+    @include _1170
+      padding: 20px
+      height: 150px
+
+    @include _600
+      padding: 10px
+      height: 100px
+      border-radius: 10px
+
+  &__category
+    margin-bottom: 8px
+    opacity: 0.5
+    font-size: 16px
+    line-height: 24px
+    text-transform: uppercase
+
+    @include _1170
+      font-size: 13px
+      line-height: 18px
+      margin-bottom: 2px
+
+    @include _600
+      font-size: 10px
+      line-height: 15px
+
+  &__name
+    margin-bottom: 40px
+    font-size: 40px
+    line-height: 48px
+
+    @include _1170
+      font-size: 30px
+      line-height: 35px
+      margin-bottom: 20px
+
+    @include _600
+      font-size: 20px
+      line-height: 25px
+      margin-bottom: 10px
+
+  &__price
+    display: flex
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))
+
+    &--currency
+      margin-right: 5px
+      font-size: 30px
+
+      @include _1170
+        margin-right: 2px
+        font-size: 25px
+
+      @include _600
+        font-size: 20px
+
+    &--value
+      font-size: 60px
+      line-height: 45px
+
+      @include _1170
+        font-size: 45px
+        line-height: 35px
+
+      @include _600
+        font-size: 35px
+        line-height: 25px
+
+  &__button
+    cursor: pointer
+    color: $accent
+    text-transform: uppercase
+    font-weight: 500
+    background-color: #fff
+    border-radius: 16px
+    border: 1px solid rgba(0, 0, 0, 0.1)
+    padding: 16px
+    align-self: flex-end
+    margin-left: auto
+    transition: all .3s ease-in-out
+    &:hover
+      background-color: $accent
+      color: #fff
+      border: 1px solid $accent
+
+    @include _600
+      border-radius: 10px
+      padding: 12px
+      align-self: center
+
+.Modal
+  z-index: 999
+  height: 100vh
+  width: 100vw
+  position: fixed
+  top: 0
+  left: 0
+  display: flex
+  justify-content: center
+  align-items: center
+
+  &--none
+    visibility: hidden
+
+  &.active
+    opacity: 1
+    pointer-events: all
+
+  &__inner
+    position: relative
+    bottom: 0vw
+    right: 0vh
+    display: flex
+    flex-direction: column
+    align-items: center
+    text-align: center
+    transition: 0.4s all
+    width: 50vw
+    padding: 60px 50px
+    border-radius: 24px
+    background-color: #fff
+
+    @include _1170
+      padding: 40px 30px
+
+    @include _979
+      width: 60vw
+
+    @include _768
+      width: 70vw
+
+    @include _480
+      padding: 30px 20px
+      width: 80vw
+
+
+    &.active
+      transform: scale(1)
+
+    .Card__info
+      margin-bottom: 32px
+
+    .Card__name
+      margin-bottom: 20px
+
+    .Card__price
+      display: flex
+      justify-content: center
+
+  &__close
+    position: absolute
+    display: flex
+    align-items: center
+    justify-content: center
+    font-size: 25px
+    top: -15px
+    right: -15px
+    width: 40px
+    height: 40px
+    border-radius: 100%
+    border: none
+    background-color: $secondary
+    cursor: pointer
+
+.Form
+  display: flex
+  flex-direction: column
+  width: 100%
+  transition: all 1s
+
+  &__input
+    outline: none
+    margin-top: 16px
+    padding: 16px
+    border: 1px solid rgba(0, 0, 0, 0.2)
+    border-radius: 16px
+    font-size: 16px
+    transition: .5s ease-in-out
+
+    @include _600
+      margin-top: 10px
+      border-radius: 10px
+      padding: 14px
+      font-size: 14px
+
+    &:nth-of-type(1)
+      margin-top: 32px
+
+      @include _1170
+        margin-top: 0px
+
+    &:hover
+      border: 1px solid lighten($accent, 30%)
+
+    &:focus
+      border: 1px solid $accent
+
+    &--error
+      border: 1px solid $error
+      &:hover
+        border: 1px solid $error
+
+      &:focus
+        border: 1px solid $error
+
+  &__error
+    color: $error
+    text-align: left
+    font-size: 12px
+    line-height: 16px
+
+    @include _600
+      font-size: 11px
+
+  &__button
+    width: 100%
+    padding: 20px
+    margin-top: 32px
+    border-radius: 16px
+    border: none
+    font-size: 16px
+    font-weight: 500
+    text-transform: uppercase
+    background-color: $accent
+    color: #fff
+    transition: 0.5s
+
+    @include _600
+      border-radius: 10px
+      padding: 14px
+      font-size: 14px
+      margin-top: 28px
+
+    &:hover
+      box-shadow: 24px 24px 40px rgba(75, 207, 160, 0.3)
+
+// css-transition-group styles
+
+.bcg-modal
+  z-index: 998
+  height: 100vh
+  width: 100vw
+  position: fixed
+  top: 0
+  left: 0
+  background-color: rgba(0,0,0,0.8)
+
+.alert-enter
+  opacity: 0
+  transform: scale(0.5)
+
+.alert-enter-active
+  opacity: 1
+  transform: translateX(0)
+  transition: opacity 300ms, transform 300ms
+
+.alert-exit
+  opacity: 1
+
+.alert-exit-active
+  opacity: 0
+  transform: scale(0.5)
+  transition: opacity 300ms, transform 300ms
+
+.bcg-enter
+  opacity: 0
+
+.bcg-enter-active
+  opacity: 1
+  transition: opacity .3s
+
+.bcg-exit
+  opacity: 1
+
+.bcg-exit-active
+  opacity: 0
+  transition: opacity .3s

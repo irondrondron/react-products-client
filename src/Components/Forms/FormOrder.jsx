@@ -1,41 +1,48 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useMutation } from '@apollo/client';
 import { CSSTransition } from 'react-transition-group';
 import errorMessage from '../../Utils/errorMessage';
 import useInput from '../../Utils/useInput';
 import { CREATE_ORDER } from '../../GraphQL/Mutations';
+import { toggleModalActive } from '../../Redux/Actions/modal';
+import { setSelectedObject } from '../../Redux/Actions/object';
 
 const FormOrder = () => {
   const name = useInput('', { isEmpty: true, onlyLetters: true });
   const number = useInput('', { isEmpty: true, onlyNumbers: true, length: 12 });
 
-  const [createOrder] = useMutation(CREATE_ORDER)
+  const [createOrder] = useMutation(CREATE_ORDER);
 
   const selectedObject = useSelector((state) => state.object.selectedObject);
 
-  // console.log(selectedObject.);
-
-  // const addOrder = () => {
-  //   createOrder({
-  //     variables: { 
-  //       productId: selectedObject._id,
-  //       name: name.value,
-  //       number: number.value
-  //     }
-  //   // })
-  // }
+  const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log({ productId: selectedObject._id, name: name.value, number: +number.value });
-    createOrder({
-      variables: { 
+    if (!name.inputValid || !number.inputValid) {
+      name.onBlur(e);
+      number.onBlur(e);
+    } else {
+      console.log({
         productId: selectedObject._id,
         name: name.value,
-        number: +number.value
-      }
-    })
+        number: +number.value,
+      });
+      createOrder({
+        variables: {
+          productId: selectedObject._id,
+          name: name.value,
+          number: +number.value,
+        },
+      });
+      setTimeout(() => {
+        dispatch(toggleModalActive(false));
+        setTimeout(() => {
+          dispatch(setSelectedObject(null));
+        }, 400);
+      }, 100);
+    }
   };
 
   return (
@@ -98,11 +105,7 @@ const FormOrder = () => {
             errorMessage(number, number.lengthError, number.lengthErrorMessage)}
         </>
       </CSSTransition>
-      <button
-        disabled={!name.inputValid || !number.inputValid}
-        type="submit"
-        className="Form__button"
-      >
+      <button type="submit" className="Form__button">
         Order
       </button>
     </form>

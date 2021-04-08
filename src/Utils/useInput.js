@@ -103,8 +103,11 @@ const useValidation = (value, validations) => {
   useEffect(() => {
     if (isEmpty || minLengthError || lengthError || maxLengthError || onlyLettersError || onlyNumbersError) {
       setInputValid(false)
+      setError(true)
+      
     } else {
       setInputValid(true)
+      setError(false)
     }
   }, [isEmpty, minLengthError, lengthError, maxLengthError, onlyLettersError, onlyNumbersError])
 
@@ -141,11 +144,9 @@ const useInput = (initialValue, validations) => {
   };
 
   return {
-
     value,
     onChange,
     onBlur,
-    // errorMessage,
     isDirty,
     ...valid,
   };
